@@ -35,7 +35,7 @@ robotMarker=new google.maps.Marker({
         animation: google.maps.Animation.DROP
     });
 
-
+executeAsync();
 
 google.maps.event.addListener(map, "click", function (event) {
     
@@ -69,6 +69,20 @@ google.maps.event.addListener(map, "click", function (event) {
 jQuery(document).ready(function(){
     initialize();
 });
+
+function executeAsync() {
+    $.get("/api/GetRobotLocation", function (response) {
+        setNewLocation(response);
+    });
+    setTimeout(executeAsync, 200);
+}
+
+function setNewLocation(response){
+    var obj = JSON.parse(response);
+    var latlng = new google.maps.LatLng(obj.lat, obj.long);
+    robotMarker.setPosition(latlng);
+}
+
 function Toggle() {
     if(!ToggleStatus)
     {
