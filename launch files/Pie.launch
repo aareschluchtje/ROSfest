@@ -1,0 +1,7 @@
+<launch>
+
+<param name="~port" value="/dev/ttyACM0" />
+<node name="NMEA_driver" pkg="nmea_navsat_driver" type="nmea_serial_driver" />
+<node name="RosAria" pkg="rosaria" type="RosAria" />
+
+</launch>

@@ -1,0 +1,10 @@
+<launch>
+
+<node name="LOG_Module" pkg="LOG_Module" type="LOG_Module" />
+<node name="GPS_Module" pkg="GPS_Module" type="GPS_Module" />
+<node name="joy" pkg="joy" type="joy_node" />
+<node name="learning_joy" pkg="learning_joy" type="turtle_teleop_joy" />
+
+
+
+</launch>
