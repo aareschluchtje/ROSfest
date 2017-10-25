@@ -36,15 +36,14 @@ function talker() {
     rosnodejs.initNode('/talker_node')
     .then((rosNode) => {
       // Create ROS publisher on the 'chatter' topic with String message
-      let pub = rosNode.advertise('/chatter', std_msgs.String);
+      let pub = rosNode.advertise('/destination', std_msgs.String);
       let count = 0;
-      const msg = new std_msgs.String();
       // Define a function to execute every 100ms
       setInterval(() => {
 	if(newMessage)
 	{
 		// Construct the message
-		msg.data = 'latitude: ' + latitude + ', longitude: ' + longitude;
+		msg.data = '' + latitude + ',' + longitude;
 		// Publish over ROS
 		pub.publish(msg);
 		// Log through stdout and /rosout
