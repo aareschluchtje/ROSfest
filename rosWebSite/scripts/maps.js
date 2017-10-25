@@ -1,19 +1,21 @@
 
-var markers = [];
-var infoboxes = [];
-var icons =[];
-var marker;
-var latitude;
-var longitude;
+    var markers = [];
+    var infoboxes = [];
+    var icons =[];
+    var marker;
+    var robotMarker;
+    var ToggleStatus = false;
+    var myLatLng = {lat: 52.14538154148927, lng: 5.6524658203125};
+    var lat;
+    var long;
 
-var myOptions = { // map settings
+ var myOptions = { // map settings
         zoom: 8,
         center: new google.maps.LatLng(51.96593143, 6.27978556),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         sensor: 'true'
     }
-
-var map = new google.maps.Map(document.getElementById("canvas-map"), myOptions);
+    var map = new google.maps.Map(document.getElementById("canvas-map"), myOptions);
 
 var image = {
     url: 'https://i.imgur.com/TZ2rAuV.png',
@@ -26,19 +28,21 @@ var image = {
     coords: [1, 1, 1, 20, 18, 20, 18, 1],
     type: 'poly'
   };
+robotMarker=new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        icon:'https://i.imgur.com/SKwGwUR.png',
+        animation: google.maps.Animation.DROP
+    });
 
-document.getElementById('submit').addEventListener("click", function(event) {
-	$.ajax({
-		type: "POST",
-		url: "http://127.0.0.1:1337/locationTarget",
-		data: {"longitude": longitude, "latitude": latitude}
-	});
-});
+
 
 google.maps.event.addListener(map, "click", function (event) {
     
-    latitude = event.latLng.lat();
-    longitude = event.latLng.lng();
+    var latitude = event.latLng.lat();
+    var longitude = event.latLng.lng();
+    lat= latitude;
+    long=longitude;
     document.getElementById("lat").value = latitude;
     document.getElementById("long").value = longitude;
     console.log( latitude + ', ' + longitude );
@@ -48,7 +52,7 @@ google.maps.event.addListener(map, "click", function (event) {
         position: event.latLng,
         map: map,
         draggable: true,
-        icon:'https://i.imgur.com/SKwGwUR.png',
+        //icon:'https://i.imgur.com/SKwGwUR.png',
         animation: google.maps.Animation.DROP
     });
     google.maps.event.addListener(marker, "dragend", function(event) {
@@ -65,3 +69,46 @@ google.maps.event.addListener(map, "click", function (event) {
 jQuery(document).ready(function(){
     initialize();
 });
+function Toggle() {
+    if(!ToggleStatus)
+    {
+      document.getElementById("overlay").style.display = "block";
+    }
+    else
+    {
+       document.getElementById("overlay").style.display = "none";
+    }
+    ToggleStatus = !ToggleStatus;
+   
+}
+function post(path, params, method) {
+    path = path || "/api/postRoute?LAT="+lat+"&LONG="+long;
+$.post(
+  path,
+  { key1: "value1", key2: "value2" },
+  function(data) {
+    
+  }
+);
+    //method = method || "post"; // Set method to post by default if not specified.
+    //params = params || "{LAT:"+lat+",LONG:"+long+"}";
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    //var form = document.createElement("form");
+    //form.setAttribute("method", method);
+    //form.setAttribute("action", path);
+
+    /*for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();*/
+}
