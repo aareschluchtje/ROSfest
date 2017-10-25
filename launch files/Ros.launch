@@ -1,10 +1,15 @@
 <launch>
 
-<node name="LOG_Module" pkg="LOG_Module" type="LOG_Module" />
-<node name="GPS_Module" pkg="GPS_Module" type="GPS_Module" />
-<node name="joy" pkg="joy" type="joy_node" />
-<node name="learning_joy" pkg="learning_joy" type="turtle_teleop_joy" />
+<machine name="desktop" address="192.168.75.130"  default="true"/>
+<machine name="pi" address="192.168.75.130" password=""/>
 
+<node machine="desktop" name="LOG_Module" pkg="LOG_Module" type="LOG_Module" />
+<node machine="desktop" name="GPS_Module" pkg="GPS_Module" type="GPS_Module" />
+<node machine="desktop" name="joy" pkg="joy" type="joy_node" />
+<node machine="desktop" name="learning_joy" pkg="learning_joy" type="turtle_teleop_joy" />
 
+<param name="~port" value="/dev/ttyACM0" />
+<node machine="pi" name="NMEA_driver" pkg="nmea_navsat_driver" type="nmea_serial_driver" />
+<node machine="pi" name="RosAria" pkg="rosaria" type="RosAria" />
 
 </launch>
