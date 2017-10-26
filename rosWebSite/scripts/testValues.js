@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /************************************************************************
  Copyright (c) 2017, Rethink Robotics
  Copyright (c) 2017, Ian McMahon
@@ -27,13 +29,13 @@ function talker() {
     const rosnodejs = require('rosnodejs');
     // Requires the std_msgs message package
     const std_msgs = rosnodejs.require('std_msgs').msg;
-	var latitude = 51.47365561973001;
-	var longitude = 4.757080078125;
+	var latitude = 51.587309751245456;
+	var longitude = 4.774589538574219;
     // Register node with ROS master
     rosnodejs.initNode('/talker_node')
     .then((rosNode) => {
       // Create ROS publisher on the 'chatter' topic with String message
-      let pub = rosNode.advertise('/chatter', std_msgs.String);
+      let pub = rosNode.advertise('/Rosaria/gps', std_msgs.String);
       let count = 0;
       const msg = new std_msgs.String();
       // Define a function to execute every 100ms

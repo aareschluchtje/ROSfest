@@ -59,7 +59,7 @@ function talker() {
     rosnodejs.initNode('/site_node')
     .then((rosNode) => {
 	  // Create ROS publisher on the 'chatter' topic with String message
-      let sub = rosNode.subscribe('/chatter', std_msgs.String,
+      let sub = rosNode.subscribe('/Rosaria/gps', std_msgs.String,
       (data) => { // define callback execution
 		  var message = data.data;
       rosnodejs.log.info('I heard: [' + message + ']');
